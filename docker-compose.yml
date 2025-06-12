@@ -1,0 +1,91 @@
+services:  
+  user-management-db:
+    image: postgres:15-alpine
+    container_name: user-management-db-prod
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${DB_USERNAME:-postgres}
+      POSTGRES_PASSWORD: ${DB_PASSWORD:-password}
+      POSTGRES_DB: ${DB_NAME:-school-management-system-db}
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8"
+    ports:
+      - "5432:5432"
+    networks:
+      - app-network
+    volumes: 
+      - pgdata_prod:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DB_USERNAME:-postgres}"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  redis:
+    image: redis:8.0-alpine
+    container_name: redis-cache-prod
+    restart: unless-stopped
+    environment:
+      - REDIS_PASSWORD=${REDIS_PASSWORD:-your_secure_redis_password}
+    command: ["redis-server", "--requirepass", "${REDIS_PASSWORD:-your_secure_redis_password}"]
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data_prod:/data
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "-a", "${REDIS_PASSWORD:-your_secure_redis_password}", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+  nestjs-app-prod:
+    build:
+      context: .
+      dockerfile: Dockerfile.prod
+    container_name: nestjs-app-prod
+    restart: unless-stopped
+    ports:
+      - "80:8000"
+    environment:
+      - NODE_ENV=production
+      - PORT=8000
+      - DB_HOST=user-management-db
+      - DB_PORT=5432
+      - DB_NAME=${DB_NAME:-school-management-system-db}
+      - DB_USERNAME=${DB_USERNAME:-postgres}
+      - DB_PASSWORD=${DB_PASSWORD:-password}
+      - DB_SYNC=false
+      - DB_LOGGING=false
+      - REDIS_URL=redis://:${REDIS_PASSWORD:-your_secure_redis_password}@redis:6379
+      - JWT_ACCESS_TOKEN_SECRET=${JWT_ACCESS_TOKEN_SECRET}
+      - JWT_ACCESS_TOKEN_EXPIRATION_TIME=${JWT_ACCESS_TOKEN_EXPIRATION_TIME:-15m}
+      - JWT_REFRESH_TOKEN_SECRET=${JWT_REFRESH_TOKEN_SECRET}
+      - JWT_REFRESH_TOKEN_EXPIRATION_TIME=${JWT_REFRESH_TOKEN_EXPIRATION_TIME:-7d}
+      - THROTTLE_TTL=${THROTTLE_TTL:-6000}
+      - THROTTLE_LIMIT=${THROTTLE_LIMIT:-100}
+    depends_on:
+      redis:
+        condition: service_healthy
+      user-management-db:
+        condition: service_healthy
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:8000/health || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      
+volumes:
+  pgdata_prod:
+    name: school-management-system-pgdata-prod
+    driver: local
+  redis-data_prod:
+    name: school-management-system-redis-data-prod
+    driver: local
+  app_logs_prod:
+    name: school-management-system-app-logs-prod
+    driver: local
+
+networks: 
+  app-network:
+    driver: bridge
