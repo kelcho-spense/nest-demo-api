@@ -83,8 +83,8 @@ This API uses **JWT Bearer tokens** for secure authentication. All protected end
     .addTag('departments', 'Department management')
     .addTag('lecturer', 'Lecturer management')
     .addBearerAuth()
+    .addServer('https://nest-demo-api.azurewebsites.net', 'Production Server') // Add production server URL
     .addServer('http://localhost:8000', 'Local Development Server') // Add server URL
-    .addServer('https://api.example.com', 'Production Server') // Add production server URL
     .build();
 
   const documentFactory = () => SwaggerModule.createDocument(app, config);
