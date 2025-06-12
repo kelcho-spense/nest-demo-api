@@ -73,7 +73,7 @@ Content-Type: application/json
 ###############################################
 # Store the tokens for later use
 # Replace these with the actual tokens received from the sign-in responses
-@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5Ac2Nob29sLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0OTMzODUzMCwiZXhwIjoxNzQ5MzM5NDMwfQ.a47y-cS5CJDlp56h8jvB_yf3NXKEf3O0jHoUz7RQEWs
+@admin_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjEsImVtYWlsIjoiYWRtaW5Ac2Nob29sLmNvbSIsInJvbGUiOiJhZG1pbiIsImlhdCI6MTc0OTc2MTIyOSwiZXhwIjoxNzQ5NzYyMTI5fQ.nMM6mHvNiun1q4MDZHRI7ob_RhvTmo3tg-bR1RSl8lk
 @faculty_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjIsImVtYWlsIjoiZmFjdWx0eUBzY2hvb2wuY29tIiwicm9sZSI6ImZhY3VsdHkiLCJpYXQiOjE3NDkzMjUxMzIsImV4cCI6MTc0OTMyNjAzMn0.zSpjpnqi8xlhrdjMWroHHt9Oah7ntAlEShkZ-Wx51yY
 @student_token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOjMsImVtYWlsIjoic3R1ZGVudEBzY2hvb2wuY29tIiwicm9sZSI6InN0dWRlbnQiLCJpYXQiOjE3NDkzMzY2NTUsImV4cCI6MTc0OTMzNzU1NX0.3RPlmaebdq3WGSUNs5m2hIBI4EQmMI-IfPAH8IbZQPU
 
