@@ -5,7 +5,7 @@ import {
   ArgumentsHost,
 } from '@nestjs/common';
 import { BaseExceptionFilter } from '@nestjs/core';
-import { LogsService } from './logs/logs.service';
+import { LogsService } from './my-logs/logs.service';
 import { Request, Response } from 'express';
 
 // Interface for standardized error response

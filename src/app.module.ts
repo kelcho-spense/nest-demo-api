@@ -6,7 +6,7 @@ import { ProfileModule } from './profiles/profile.module';
 import { DatabaseModule } from './database/database.module';
 import { DepartmentsModule } from './departments/departments.module';
 import { CoursesModule } from './courses/courses.module';
-import { LogsModule } from './logs/logs.module';
+import { LogsModule } from './my-logs/logs.module';
 import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 import { createKeyv, Keyv } from '@keyv/redis';
 import { CacheableMemory } from 'cacheable';
